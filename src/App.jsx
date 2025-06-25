@@ -20,7 +20,7 @@ function App() {
     setColors((prevColors) => [data, ...prevColors]);
   }
   function handleDeleteClick(id) {
-    setColorToDelete(id); // welceh fabre soll gelöscht werdne und bei welcher die Delete message angezeigt werden
+    setColorToDelete(id); // welche farbe soll gelöscht werden und bei welcher die Delete message angezeigt werden
   }
   function handleDeleteColor(id) {
     setColors(
