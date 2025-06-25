@@ -13,6 +13,10 @@ export default function Color({
   contrastText,
   setContrastText,
   handleCancel,
+  handleDeleteColor,
+  handleDeleteClick,
+  colorToDelete,
+  handleCancelDelete,
 }) {
   const isEditing = editColor?.id === color.id;
 
@@ -49,6 +53,34 @@ export default function Color({
           >
             Edit
           </button>
+          {colorToDelete === color.id ? (
+            <div className="color-card-highlight">
+              <p>Are you sure you want to delete this theme?</p>
+
+              <button
+                onClick={() => handleDeleteColor(color.id)}
+                type="button"
+                title="confirm-delete"
+              >
+                Delete
+              </button>
+              <button
+                onClick={handleCancelDelete}
+                type="button"
+                title="cancel-delete"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => handleDeleteClick(color.id)}
+              type="button"
+              title="delete"
+            >
+              Delete
+            </button>
+          )}
         </>
       )}
     </div>
