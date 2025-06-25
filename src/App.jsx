@@ -21,7 +21,7 @@ function App() {
 
   //function die durch den edit button (onClick) ausgelöst wird mit der idToEdit
   //mit find das theme mit der id finden
-  //theme wird in einem extra state gespeichert (steuernob formular im edit modus ist)
+  //theme wird in einem extra state gespeichert (steuer nob formular im edit modus ist)
   // die restlichen Zeilen helfen die aktuellen werte anzuzeigen vom Theme
   function handleEditColor(idToEdit) {
     const colorToEdit = colors.find((color) => color.id === idToEdit);
@@ -42,7 +42,12 @@ function App() {
     setRole("");
     setContrastText("");
   }
-
+  function handleCancel() {
+    setEditColor(null); // raus aus dem Bearbeitungsmodus
+    setHex(""); // reset formular
+    setRole("");
+    setContrastText("");
+  }
   return (
     <>
       <h1>Theme Creator</h1>
@@ -64,6 +69,8 @@ function App() {
           handleEditColor={handleEditColor}
           editColor={editColor}
           onUpdateColor={handleUpdateColor}
+          onCancel={handleCancel}
+          handleCancel={handleCancel}
           role={role}
           setRole={setRole}
           hex={hex}

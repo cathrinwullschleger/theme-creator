@@ -1,5 +1,5 @@
 import "./Color.css";
-import ColorInput from "./ColorInput";
+import ColorForm from "./ColorForm";
 
 export default function Color({
   color,
@@ -12,6 +12,7 @@ export default function Color({
   setHex,
   contrastText,
   setContrastText,
+  handleCancel,
 }) {
   const isEditing = editColor?.id === color.id;
 
@@ -23,41 +24,18 @@ export default function Color({
         color: color.contrastText,
       }}
     >
-      {isEditing ? (
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            const updatedColor = {
-              id: color.id,
-              role,
-              hex,
-              contrastText,
-            };
-            onUpdateColor(updatedColor);
-          }}
-        >
-          <label htmlFor="hex">Backgroundcolor</label>
-          <ColorInput id="hex" name="hex" value={hex} onChange={setHex} />
-
-          <label htmlFor="role">Name of Theme</label>
-          <input
-            id="role"
-            name="role"
-            type="text"
-            value={role}
-            onChange={(event) => setRole(event.target.value)}
-          />
-
-          <label htmlFor="contrastText">Fontcolor</label>
-          <ColorInput
-            id="contrastText"
-            name="contrastText"
-            value={contrastText}
-            onChange={setContrastText}
-          />
-
-          <button type="submit">Update Theme</button>
-        </form>
+      {isEditing ? ( // bearbeitungsmodus wird so in der colorcard angezeigt
+        <ColorForm
+          hex={hex}
+          setHex={setHex}
+          contrastText={contrastText}
+          setContrastText={setContrastText}
+          role={role}
+          setRole={setRole}
+          editColor={editColor}
+          onUpdateColor={onUpdateColor}
+          onCancel={handleCancel}
+        ></ColorForm>
       ) : (
         // normaler modus
         <>

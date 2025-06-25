@@ -16,6 +16,7 @@ export default function ColorForm({
   role,
   setRole,
   editColor,
+  onCancel,
 }) {
   //Wenn editColor sich ändert, führe bitte diesen Code aus, um die Formularfelder zu aktualisieren. State bleibt synchron
   useEffect(() => {
@@ -23,6 +24,10 @@ export default function ColorForm({
       setRole(editColor.role);
       setHex(editColor.hex);
       setContrastText(editColor.contrastText);
+    } else {
+      setRole("");
+      setHex("");
+      setContrastText("");
     }
   }, [editColor, setRole, setHex, setContrastText]);
 
@@ -83,8 +88,13 @@ export default function ColorForm({
           onChange={setContrastText}
         ></ColorInput>
         <button type="submit">
-          {editColor ? "Update THeme" : "Add Theme"}
-        </button>
+          {editColor ? "Update Theme" : "Add Theme"}
+        </button>{" "}
+        {editColor && (
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );
