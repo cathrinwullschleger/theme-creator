@@ -2,28 +2,52 @@
 // 2. function handleAddColor (event)
 
 //import "./Colorform.css";
+import { useEffect } from "react";
 import ColorInput from "./ColorInput.jsx";
 import { uid } from "uid";
 
 export default function ColorForm({
   onAddColor, // function from parent to add color
+  onUpdateColor, // function
   hex,
   setHex,
   contrastText,
   setContrastText,
   role,
   setRole,
+  editColor,
+  onCancel,
 }) {
+  //Wenn editColor sich ändert, führe bitte diesen Code aus, um die Formularfelder zu aktualisieren. State bleibt synchron
+  useEffect(() => {
+    if (editColor) {
+      setRole(editColor.role);
+      setHex(editColor.hex);
+      setContrastText(editColor.contrastText);
+    } else {
+      setRole("");
+      setHex("");
+      setContrastText("");
+    }
+  }, [editColor, setRole, setHex, setContrastText]);
+
   function handleAddColor(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    data.id = uid();
+
     if (!data.role) {
       data.role = data.hex; //Fallback auf hex wert als Name/Role
     }
 
+    if (editColor) {
+      data.id = editColor.id;
+      onUpdateColor(data);
+    } else {
+      data.id = uid();
+      onAddColor(data);
+    }
     // const roleValue = event.target.role.value;
     // const hexValue = event.target.hex.value;
     // const contrastTextValue = event.target.contrastText.value;
@@ -31,9 +55,6 @@ export default function ColorForm({
     // setRole(roleValue);
     // setHex(hexValue);
     // setContrastText(contrastTextValue);
-
-    console.log(data);
-    onAddColor(data); // übergibt neues Theme an paren Komponente
 
     setHex(""); // reset formular
     setRole("");
@@ -66,7 +87,14 @@ export default function ColorForm({
           value={contrastText}
           onChange={setContrastText}
         ></ColorInput>
-        <button type="submit">Add Theme</button>
+        <button type="submit">
+          {editColor ? "Update Theme" : "Add Theme"}
+        </button>{" "}
+        {editColor && (
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
       </form>
     </div>
   );
