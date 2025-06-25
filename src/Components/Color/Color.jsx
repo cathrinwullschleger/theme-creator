@@ -13,6 +13,7 @@ export default function Color({
   contrastText,
   setContrastText,
   handleCancel,
+  handleDeleteColor,
 }) {
   const isEditing = editColor?.id === color.id;
 
@@ -48,6 +49,13 @@ export default function Color({
             title="Edit"
           >
             Edit
+          </button>
+          <button
+            onClick={() => handleDeleteColor(color.id)}
+            type="button"
+            title="delete"
+          >
+            Delete
           </button>
         </>
       )}

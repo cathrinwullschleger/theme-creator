@@ -19,6 +19,14 @@ function App() {
     setColors((prevColors) => [...prevColors, data]);
   }
 
+  function handleDeleteColor(idToDelet) {
+    setColors(
+      colors.filter((color) => {
+        return color.id !== idToDelet;
+      })
+    );
+  }
+
   //function die durch den edit button (onClick) ausgelöst wird mit der idToEdit
   //mit find das theme mit der id finden
   //theme wird in einem extra state gespeichert (steuer nob formular im edit modus ist)
@@ -66,6 +74,8 @@ function App() {
         <Color
           key={color.id}
           color={color}
+          onDelet={handleDeleteColor}
+          handleDeleteColor={handleDeleteColor}
           handleEditColor={handleEditColor}
           editColor={editColor}
           onUpdateColor={handleUpdateColor}
