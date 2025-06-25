@@ -7,14 +7,40 @@ import ColorForm from "./Components/Color/ColorForm.jsx";
 function App() {
   // function handleAddcolor aber mit (data)
   const [role, setRole] = useState("");
-  const [hex, setHex] = useState("");
-  const [contrastText, setContrastText] = useState("");
+  const [hex, setHex] = useState("#BFD4F9");
+  const [contrastText, setContrastText] = useState("#3D281C");
 
   const [colors, setColors] = useState(initialColors);
+  const [editColor, setEditColor] = useState(null);
 
+  //nues Theme(Color hinzufügen)
   function handleAddColor(data) {
     console.log(data);
     setColors((prevColors) => [...prevColors, data]);
+  }
+
+  //function die durch den edit button (onClick) ausgelöst wird mit der idToEdit
+  //mit find das theme mit der id finden
+  //theme wird in einem extra state gespeichert (steuernob formular im edit modus ist)
+  // die restlichen Zeilen helfen die aktuellen werte anzuzeigen vom Theme
+  function handleEditColor(idToEdit) {
+    const colorToEdit = colors.find((color) => color.id === idToEdit);
+    setEditColor(colorToEdit);
+    setRole(colorToEdit.role);
+    setHex(colorToEdit.hex);
+    setContrastText(colorToEdit.contrastText);
+  }
+  // function die durch den update button onClick ausgelöst wird
+  //
+  function handleUpdateColor(updatedColor) {
+    const updatedColors = colors.map((color) => {
+      return color.id === updatedColor.id ? updatedColor : color;
+    });
+    setColors(updatedColors); //Farbliste akutalieren
+    setEditColor(null); // nicht mehr im Bearbeitungsmodus
+    setHex(""); // reset formular
+    setRole("");
+    setContrastText("");
   }
 
   return (
@@ -28,11 +54,24 @@ function App() {
         setHex={setHex}
         contrastText={contrastText}
         setContrastText={setContrastText}
+        editColor={null}
       />
 
-      {colors.map((color) => {
-        return <Color key={color.id} color={color} />;
-      })}
+      {colors.map((color) => (
+        <Color
+          key={color.id}
+          color={color}
+          handleEditColor={handleEditColor}
+          editColor={editColor}
+          onUpdateColor={handleUpdateColor}
+          role={role}
+          setRole={setRole}
+          hex={hex}
+          setHex={setHex}
+          contrastText={contrastText}
+          setContrastText={setContrastText}
+        />
+      ))}
     </>
   );
 }
