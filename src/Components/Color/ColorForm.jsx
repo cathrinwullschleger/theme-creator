@@ -1,7 +1,7 @@
 // 1. function addColor mit 3 States (role (if keine Eingabe ->hex), hex und contrastText )
 // 2. function handleAddColor (event)
 
-//import "./Colorform.css";
+import "./ColorForm.css";
 import { useEffect } from "react";
 import ColorInput from "./ColorInput.jsx";
 import { uid } from "uid";
@@ -63,7 +63,11 @@ export default function ColorForm({
 
   return (
     <div>
-      <form onSubmit={handleAddColor} aria-label="theme-creator">
+      <form
+        className="form"
+        onSubmit={handleAddColor}
+        aria-label="theme-creator"
+      >
         <label htmlFor="hex">Backgroundcolor</label>
         <ColorInput
           id="hex"
