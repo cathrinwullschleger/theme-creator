@@ -9,3 +9,7 @@
   background: black;
   color: white;
 }
+
+.color-card-highlight {
+  color: var(--contrast-text);
+}

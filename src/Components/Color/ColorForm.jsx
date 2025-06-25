@@ -25,9 +25,9 @@ export default function ColorForm({
       setHex(editColor.hex);
       setContrastText(editColor.contrastText);
     } else {
+      setHex("#BFD4F9");
       setRole("");
-      setHex("");
-      setContrastText("");
+      setContrastText("#3D281C");
     }
   }, [editColor, setRole, setHex, setContrastText]);
 
@@ -56,9 +56,9 @@ export default function ColorForm({
     // setHex(hexValue);
     // setContrastText(contrastTextValue);
 
-    setHex(""); // reset formular
+    setHex("#BFD4F9"); // reset formular
     setRole("");
-    setContrastText("");
+    setContrastText("#3D281C");
   }
 
   return (

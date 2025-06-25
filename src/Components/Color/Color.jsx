@@ -54,7 +54,12 @@ export default function Color({
             Edit
           </button>
           {colorToDelete === color.id ? (
-            <div className="color-card-highlight">
+            <div
+              className="color-card-highlight"
+              style={{
+                "--contrast-text": color.contrastText, // CSS-Variable setzen
+              }}
+            >
               <p>Are you sure you want to delete this theme?</p>
 
               <button

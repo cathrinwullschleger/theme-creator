@@ -17,7 +17,7 @@ function App() {
   //nues Theme(Color hinzufügen)
   function handleAddColor(data) {
     console.log(data);
-    setColors((prevColors) => [...prevColors, data]);
+    setColors((prevColors) => [data, ...prevColors]);
   }
   function handleDeleteClick(id) {
     setColorToDelete(id); // welceh fabre soll gelöscht werdne und bei welcher die Delete message angezeigt werden
@@ -53,15 +53,15 @@ function App() {
     });
     setColors(updatedColors); //Farbliste akutalieren
     setEditColor(null); // nicht mehr im Bearbeitungsmodus
-    setHex(""); // reset formular
+    setHex("#BFD4F9"); // reset formular
     setRole("");
-    setContrastText("");
+    setContrastText("#3D281C");
   }
   function handleCancel() {
     setEditColor(null); // raus aus dem Bearbeitungsmodus
-    setHex(""); // reset formular
+    setHex("#BFD4F9"); // reset formular
     setRole("");
-    setContrastText("");
+    setContrastText("#3D281C");
   }
   return (
     <>
@@ -74,7 +74,7 @@ function App() {
         setHex={setHex}
         contrastText={contrastText}
         setContrastText={setContrastText}
-        editColor={null}
+        editColor={editColor}
       />
 
       {colors.length === 0 ? (
