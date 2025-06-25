@@ -1,14 +1,28 @@
 // 1. function addColor mit 3 States (role (if keine Eingabe ->hex), hex und contrastText )
 // 2. function handleAddColor (event)
 
-import "./Colorform.css";
+//import "./Colorform.css";
+import ColorInput from "./ColorInput.jsx";
+import { uid } from "uid";
 
-export default function ColorForm({ onAddColor }) {
+export default function ColorForm({
+  onAddColor, // function from parent to add color
+  hex,
+  setHex,
+  contrastText,
+  setContrastText,
+  role,
+  setRole,
+}) {
   function handleAddColor(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
+    data.id = uid();
+    if (!data.role) {
+      data.role = data.hex; //Fallback auf hex wert als Name/Role
+    }
 
     // const roleValue = event.target.role.value;
     // const hexValue = event.target.hex.value;
@@ -18,30 +32,40 @@ export default function ColorForm({ onAddColor }) {
     // setHex(hexValue);
     // setContrastText(contrastTextValue);
 
-    onAddColor(data);
+    console.log(data);
+    onAddColor(data); // übergibt neues Theme an paren Komponente
 
-    event.target.reset();
+    setHex(""); // reset formular
+    setRole("");
+    setContrastText("");
   }
 
   return (
     <div>
-      <form onSubmit={handleAddColor} aria-labelledby="theme-creator">
-        <label htmlFor="hex"></label>
-        <input id="hex" type="color" name="hex" placeholder="#BFD4F9"></input>
-        <label htmlFor="role"></label>
+      <form onSubmit={handleAddColor} aria-label="theme-creator">
+        <label htmlFor="hex">Backgroundcolor</label>
+        <ColorInput
+          id="hex"
+          name="hex"
+          value={hex}
+          onChange={setHex}
+        ></ColorInput>
+        <label htmlFor="role">Name of Theme</label>
         <input
           id="role"
           type="text"
           name="role"
           placeholder="Cornflower"
+          value={role}
+          onChange={(event) => setRole(event.target.value)}
         ></input>
-        <label htmlFor="contrastText"></label>
-        <input
+        <label htmlFor="contrastText">Fontcolor</label>
+        <ColorInput
           id="contrastText"
-          type="color"
           name="contrastText"
-          placeholder="##3D281C"
-        ></input>
+          value={contrastText}
+          onChange={setContrastText}
+        ></ColorInput>
         <button type="submit">Add Theme</button>
       </form>
     </div>
