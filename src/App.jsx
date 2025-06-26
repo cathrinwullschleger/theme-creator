@@ -11,7 +11,6 @@ function App() {
   });
 
   const [colorToDelete, setColorToDelete] = useState(null);
-  const [editColor, setEditColor] = useState(null);
 
   function handleAddColor(data) {
     console.log(data);
@@ -32,14 +31,6 @@ function App() {
     setColorToDelete(null); // no delete
   }
 
-  // function triggerd to onClick(Edit-Button)
-  function handleEditColor(idToEdit) {
-    // find color through id
-    const colorToEdit = colors.find((color) => color.id === idToEdit);
-    // set color to State (setEditColor)
-    setEditColor(colorToEdit);
-  }
-
   // function to update list of color themes (after editing)
   function handleUpdateColor(updatedColor) {
     console.log("we are in app");
@@ -47,14 +38,12 @@ function App() {
       return color.id === updatedColor.id ? updatedColor : color;
     });
     setColors(updatedColors);
-    // out of edit mode
-    setEditColor(null);
   }
 
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm onAddColor={handleAddColor} editColor={editColor} />
+      <ColorForm onAddColor={handleAddColor} />
 
       {colors.length === 0 ? (
         <p>There are no themes available.. Please add some.</p>
@@ -67,8 +56,6 @@ function App() {
             handleDeleteColor={handleDeleteColor} // to delete
             handleCancelDelete={handleCancelDelete} // to cancel
             colorToDelete={colorToDelete}
-            onHandleEditColor={handleEditColor}
-            editColor={editColor}
             onUpdateColor={handleUpdateColor}
           />
         ))
