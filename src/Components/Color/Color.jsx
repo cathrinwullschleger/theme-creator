@@ -12,14 +12,14 @@ export default function Color({
   handleCancelDelete,
 }) {
   const [isEditing, setIsEditing] = useState(false);
-
   const [copyMessage, setCopyMessage] = useState(false);
+
   useEffect(() => {
     let timerId = setTimeout(() => {
       setCopyMessage(false); // message disapears
     }, 3000);
-    return () => clearTimeout(timerId); //verhindert das sich timer überschneiden
-  }, [copyMessage]); //copyMessage change (true/false) useEffect is a
+    return () => clearTimeout(timerId); //
+  }, [copyMessage]); //copyMessage change (true/false) useEffect is activated
 
   async function CopyToClipboard(hex) {
     console.log(hex);
@@ -41,9 +41,6 @@ export default function Color({
     >
       {isEditing ? ( // edit mode colorForm - formfields are shown
         <ColorForm
-          initialHex={color.hex}
-          initialContrastText={color.contrastText}
-          initialRole={color.role}
           editColor={color}
           onUpdateColor={(updateColor) => {
             onUpdateColor(updateColor); // update state in app

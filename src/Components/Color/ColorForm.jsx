@@ -8,7 +8,6 @@ export default function ColorForm({
   onUpdateColor,
   editColor,
   onCancel,
-  setIsEditing,
 }) {
   const [hex, setHex] = useState("#BFD4F9");
   const [contrastText, setContrastText] = useState("#3D281C");
@@ -46,7 +45,7 @@ export default function ColorForm({
       data.id = editColor.id;
       console.log(data);
       onUpdateColor(data);
-      setIsEditing(false);
+      onCancel();
     } else {
       data.id = uid();
       onAddColor(data);
