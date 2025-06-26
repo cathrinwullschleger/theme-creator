@@ -1,42 +1,21 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
-// import { useState } from "react";
+import { useState } from "react";
 import ColorForm from "./Components/Color/ColorForm.jsx";
 import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  // localStorageState
-  const [role, setRole] = useLocalStorageState("role", {
-    defaultValue: "",
-  });
-  const [hex, setHex] = useLocalStorageState("hex", {
-    defaultValue: "#BFD4F9",
-  });
-  const [contrastText, setContrastText] = useLocalStorageState("contrastText", {
-    defaultValue: "#3D281C",
-  });
-
   const [colors, setColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
-  const [colorToDelete, setColorToDelete] = useLocalStorageState(
-    "colorToDelete",
-    { defaultValue: null }
-  );
-  const [editColor, setEditColor] = useLocalStorageState("editcolor", {
-    defaultValue: null,
-  });
-  //normal state
-  // const [role, setRole] = useState("");
-  // const [hex, setHex] = useState("#BFD4F9");
-  // const [contrastText, setContrastText] = useState("#3D281C");
 
-  // const [colors, setColors] = useState(initialColors);
-  // const [colorToDelete, setColorToDelete] = useState(null);
-  // const [editColor, setEditColor] = useState(null);
+  const [role, setRole] = useState("");
+  const [hex, setHex] = useState("#BFD4F9");
+  const [contrastText, setContrastText] = useState("#3D281C");
+  const [colorToDelete, setColorToDelete] = useState(null);
+  const [editColor, setEditColor] = useState(null);
 
-  //nues Theme(Color hinzufügen)
   function handleAddColor(data) {
     console.log(data);
     setColors((prevColors) => [data, ...prevColors]);
@@ -70,21 +49,14 @@ function App() {
   // function die durch den update button onClick ausgelöst wird
   //
   function handleUpdateColor(updatedColor) {
+    console.log("we are in app");
     const updatedColors = colors.map((color) => {
       return color.id === updatedColor.id ? updatedColor : color;
     });
     setColors(updatedColors); //Farbliste akutalieren
     setEditColor(null); // nicht mehr im Bearbeitungsmodus
-    setHex("#BFD4F9"); // reset formular
-    setRole("");
-    setContrastText("#3D281C");
   }
-  function handleCancel() {
-    setEditColor(null); // raus aus dem Bearbeitungsmodus
-    setHex("#BFD4F9"); // reset formular
-    setRole("");
-    setContrastText("#3D281C");
-  }
+
   return (
     <>
       <h1>Theme Creator</h1>
@@ -110,11 +82,9 @@ function App() {
             handleDeleteColor={handleDeleteColor} // zum endgültigen löschen
             handleCancelDelete={handleCancelDelete} // zum abbrechen
             colorToDelete={colorToDelete}
-            handleEditColor={handleEditColor}
+            onHandleEditColor={handleEditColor}
             editColor={editColor}
             onUpdateColor={handleUpdateColor}
-            onCancel={handleCancel}
-            handleCancel={handleCancel}
             role={role}
             setRole={setRole}
             hex={hex}

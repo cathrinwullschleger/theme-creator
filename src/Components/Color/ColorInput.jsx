@@ -1,14 +1,4 @@
-// //[User Input]
-//     ↓
-// [ColorInput.handleChange()]
-//     ↓
-// [ColorInput calls onChange(newValue)]
-//     ↓
-// [Parent component updates state via setState(newValue)]
-//     ↓
-// [React re-renders Parent & passes new state as prop to ColorInput]
-//     ↓
-// [ColorInput receives new value via props and updates UI]
+// User gibt Werte ein -> ColotInput ->handleChance -> calls onChange -> new values via onChange in ColorForm with state (hex,constrastText)
 
 export default function ColorInput({ value, onChange, id, name }) {
   function handleChange(event) {
