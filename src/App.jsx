@@ -1,18 +1,40 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
-import { useState } from "react";
+// import { useState } from "react";
 import ColorForm from "./Components/Color/ColorForm.jsx";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  // function handleAddcolor aber mit (data)
-  const [role, setRole] = useState("");
-  const [hex, setHex] = useState("#BFD4F9");
-  const [contrastText, setContrastText] = useState("#3D281C");
+  // localStorageState
+  const [role, setRole] = useLocalStorageState("role", {
+    defaultValue: "",
+  });
+  const [hex, setHex] = useLocalStorageState("hex", {
+    defaultValue: "#BFD4F9",
+  });
+  const [contrastText, setContrastText] = useLocalStorageState("contrastText", {
+    defaultValue: "#3D281C",
+  });
 
-  const [colors, setColors] = useState(initialColors);
-  const [colorToDelete, setColorToDelete] = useState(null);
-  const [editColor, setEditColor] = useState(null);
+  const [colors, setColors] = useLocalStorageState("colors", {
+    defaultValue: initialColors,
+  });
+  const [colorToDelete, setColorToDelete] = useLocalStorageState(
+    "colorToDelete",
+    { defaultValue: null }
+  );
+  const [editColor, setEditColor] = useLocalStorageState("editcolor", {
+    defaultValue: null,
+  });
+  //normal state
+  // const [role, setRole] = useState("");
+  // const [hex, setHex] = useState("#BFD4F9");
+  // const [contrastText, setContrastText] = useState("#3D281C");
+
+  // const [colors, setColors] = useState(initialColors);
+  // const [colorToDelete, setColorToDelete] = useState(null);
+  // const [editColor, setEditColor] = useState(null);
 
   //nues Theme(Color hinzufügen)
   function handleAddColor(data) {
@@ -20,7 +42,7 @@ function App() {
     setColors((prevColors) => [data, ...prevColors]);
   }
   function handleDeleteClick(id) {
-    setColorToDelete(id); // welche farbe soll gelöscht werden und bei welcher die Delete message angezeigt werden
+    setColorToDelete(id); // welche farbe soll gelöscht und bei welcher die Delete message angezeigt werden
   }
   function handleDeleteColor(id) {
     setColors(
@@ -84,9 +106,9 @@ function App() {
           <Color
             key={color.id}
             color={color}
-            handleDeleteClick={handleDeleteClick} // zum Öffnen der Bestätigung
-            handleDeleteColor={handleDeleteColor} // zum endgültigen Löschen
-            handleCancelDelete={handleCancelDelete} // zum Abbrechen
+            handleDeleteClick={handleDeleteClick} // zum öffnen der Bestätigung
+            handleDeleteColor={handleDeleteColor} // zum endgültigen löschen
+            handleCancelDelete={handleCancelDelete} // zum abbrechen
             colorToDelete={colorToDelete}
             handleEditColor={handleEditColor}
             editColor={editColor}
