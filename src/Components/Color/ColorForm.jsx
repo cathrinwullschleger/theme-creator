@@ -1,53 +1,49 @@
-// 1. function addColor mit 3 States (role (if keine Eingabe ->hex), hex und contrastText )
-// 2. function handleAddColor (event)
-
 import "./ColorForm.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import ColorInput from "./ColorInput.jsx";
 import { uid } from "uid";
 
 export default function ColorForm({
-  onAddColor, // function from parent to add color
-  onUpdateColor, // function
-  hex,
-  setHex,
-  contrastText,
-  setContrastText,
-  role,
-  setRole,
+  onAddColor,
+  onUpdateColor,
   editColor,
   onCancel,
   setIsEditing,
 }) {
-  //Wenn editColor sich ändert, führe bitte diesen Code aus, um die Formularfelder zu aktualisieren. State bleibt synchron
-  // react rendert erst die Komponenente mit dem aktuellen State, danach die useEffect function, wenn State verändert (editColor) wird neu gerendert.
-  // Wieso useEffect und nicht einfach if? endlos loop.
+  const [hex, setHex] = useState("#BFD4F9");
+  const [contrastText, setContrastText] = useState("#3D281C");
+  const [role, setRole] = useState("");
+
   useEffect(() => {
     if (editColor) {
-      setRole(editColor.role);
       setHex(editColor.hex);
       setContrastText(editColor.contrastText);
+      setRole(editColor.role);
     } else {
       setHex("#BFD4F9");
-      setRole("");
       setContrastText("#3D281C");
+      setRole("");
     }
-  }, [editColor, setRole, setHex, setContrastText]);
+  }, [editColor]);
 
-  function handleAddColor(event) {
+  function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const data = {
+      hex,
+      contrastText,
+      role,
+    };
 
     if (!data.role) {
-      data.role = data.hex; //Fallback auf hex wert als Name/Role
+      data.role = data.hex; //fallback to hex if no role added
     }
 
     if (editColor) {
+      // edit mode
       console.log(editColor);
       console.log("we are in the edit mode");
-      data.id = editColor;
+      data.id = editColor.id;
       console.log(data);
       onUpdateColor(data);
       setIsEditing(false);
@@ -58,22 +54,11 @@ export default function ColorForm({
       setRole("");
       setContrastText("#3D281C");
     }
-    // const roleValue = event.target.role.value;
-    // const hexValue = event.target.hex.value;
-    // const contrastTextValue = event.target.contrastText.value;
-
-    // setRole(roleValue);
-    // setHex(hexValue);
-    // setContrastText(contrastTextValue);
   }
 
   return (
     <div>
-      <form
-        className="form"
-        onSubmit={handleAddColor}
-        aria-label="theme-creator"
-      >
+      <form className="form" onSubmit={handleSubmit} aria-label="theme-creator">
         <label htmlFor="hex">Backgroundcolor</label>
         <ColorInput
           id="hex"
@@ -99,7 +84,7 @@ export default function ColorForm({
         ></ColorInput>
         <button type="submit">
           {editColor ? "Update Theme" : "Add Theme"}
-        </button>{" "}
+        </button>
         {editColor && (
           <button type="button" onClick={onCancel}>
             Cancel

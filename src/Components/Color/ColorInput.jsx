@@ -2,7 +2,7 @@
 
 export default function ColorInput({ value, onChange, id, name }) {
   function handleChange(event) {
-    onChange(event.target.value); // onChange aufrufen mit neuen werten
+    onChange(event.target.value);
   }
 
   return (
@@ -12,7 +12,7 @@ export default function ColorInput({ value, onChange, id, name }) {
         id={id}
         name={name}
         value={value}
-        onChange={handleChange} // handleChange wird getriggert
+        onChange={handleChange}
         placeholder="#BFD4F9"
       />
       <input type="color" value={value} onChange={handleChange}></input>
