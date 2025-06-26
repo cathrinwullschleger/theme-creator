@@ -18,7 +18,7 @@ export default function Color({
   colorToDelete,
   handleCancelDelete,
 }) {
-  const isEditing = editColor.id === color.id;
+  const isEditing = editColor?.id === color.id;
   // welche id wird gerade bearbeitet und wo soll colorForm geladen werden (andere Colors bleiben gerendert, aber ohne Bearbeitungsmodus)
   //Farbe-ID	editColor?.id	color.id	isEditing	Was wird angezeigt?
   // 1	        "2"         	"1"	      false	normale Ansicht
