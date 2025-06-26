@@ -17,6 +17,7 @@ export default function ColorForm({
   setRole,
   editColor,
   onCancel,
+  setIsEditing,
 }) {
   //Wenn editColor sich ändert, führe bitte diesen Code aus, um die Formularfelder zu aktualisieren. State bleibt synchron
   // react rendert erst die Komponenente mit dem aktuellen State, danach die useEffect function, wenn State verändert (editColor) wird neu gerendert.
@@ -44,11 +45,18 @@ export default function ColorForm({
     }
 
     if (editColor) {
-      data.id = editColor.id;
+      console.log(editColor);
+      console.log("we are in the edit mode");
+      data.id = editColor;
+      console.log(data);
       onUpdateColor(data);
+      setIsEditing(false);
     } else {
       data.id = uid();
       onAddColor(data);
+      setHex("#BFD4F9"); // reset formular
+      setRole("");
+      setContrastText("#3D281C");
     }
     // const roleValue = event.target.role.value;
     // const hexValue = event.target.hex.value;
@@ -57,10 +65,6 @@ export default function ColorForm({
     // setRole(roleValue);
     // setHex(hexValue);
     // setContrastText(contrastTextValue);
-
-    setHex("#BFD4F9"); // reset formular
-    setRole("");
-    setContrastText("#3D281C");
   }
 
   return (

@@ -1,10 +1,9 @@
 import "./Color.css";
 import ColorForm from "./ColorForm";
+import { useState } from "react";
 
 export default function Color({
   color,
-  handleEditColor,
-  editColor,
   onUpdateColor,
   role,
   setRole,
@@ -12,17 +11,24 @@ export default function Color({
   setHex,
   contrastText,
   setContrastText,
-  handleCancel,
+
   handleDeleteColor,
   handleDeleteClick,
   colorToDelete,
   handleCancelDelete,
 }) {
-  const isEditing = editColor.id === color.id;
-  // welche id wird gerade bearbeitet und wo soll colorForm geladen werden (andere Colors bleiben gerendert, aber ohne Bearbeitungsmodus)
-  //Farbe-ID	editColor?.id	color.id	isEditing	Was wird angezeigt?
-  // 1	        "2"         	"1"	      false	normale Ansicht
-  // 2	        "2"	          "2"	      true	Formular (<ColorForm>)
+  const [isEditing, setIsEditing] = useState(false);
+  // const [copyMessage, setCopyMessage] = useState("");
+
+  async function CopyToClipboard(hex) {
+    console.log(hex);
+    try {
+      await navigator.clipboard.writeText(hex);
+      console.log("copied");
+    } catch (error) {
+      console.error("copy failed");
+    }
+  }
 
   return (
     <div
@@ -40,21 +46,25 @@ export default function Color({
           setContrastText={setContrastText}
           role={role}
           setRole={setRole}
-          editColor={editColor}
+          editColor={color.id}
           onUpdateColor={onUpdateColor}
-          onCancel={handleCancel}
+          onCancel={() => setIsEditing(false)}
+          setIsEditing={setIsEditing}
         ></ColorForm>
       ) : (
         // normaler modus
         <>
           <h3 className="color-card-headline">{color.hex}</h3>
+          <button
+            onClick={() => CopyToClipboard(color.hex)}
+            type="button"
+            title="copy hex"
+          >
+            Copy
+          </button>
           <h4>{color.role}</h4>
           <p>contrast: {color.contrastText}</p>
-          <button
-            onClick={() => handleEditColor(color.id)}
-            type="button"
-            title="Edit"
-          >
+          <button onClick={() => setIsEditing(true)} type="button" title="Edit">
             Edit
           </button>
           {colorToDelete === color.id ? (
