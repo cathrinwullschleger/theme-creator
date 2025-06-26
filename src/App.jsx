@@ -10,18 +10,15 @@ function App() {
     defaultValue: initialColors,
   });
 
-  const [role, setRole] = useState("");
-  const [hex, setHex] = useState("#BFD4F9");
-  const [contrastText, setContrastText] = useState("#3D281C");
   const [colorToDelete, setColorToDelete] = useState(null);
   const [editColor, setEditColor] = useState(null);
 
   function handleAddColor(data) {
     console.log(data);
-    setColors((prevColors) => [data, ...prevColors]);
+    setColors((prevColors) => [data, ...prevColors]); // add new color to color array
   }
-  function handleDeleteClick(id) {
-    setColorToDelete(id); // welche farbe soll gelöscht und bei welcher die Delete message angezeigt werden
+  function handleConfirmDelete(id) {
+    setColorToDelete(id); //  color to delete
   }
   function handleDeleteColor(id) {
     setColors(
@@ -29,47 +26,35 @@ function App() {
         return color.id !== id;
       })
     );
-    setColorToDelete(null); // wird gelöscht
+    setColorToDelete(null); //  delete
   }
   function handleCancelDelete() {
-    setColorToDelete(null); //schließen ohne löschen
+    setColorToDelete(null); // no delete
   }
 
-  //function die durch den edit button (onClick) ausgelöst wird mit der idToEdit
-  //mit find das theme mit der id finden
-  //theme wird in einem extra state gespeichert (steuer nob formular im edit modus ist)
-  // die restlichen Zeilen helfen die aktuellen werte anzuzeigen vom Theme
+  // function triggerd to onClick(Edit-Button)
   function handleEditColor(idToEdit) {
+    // find color through id
     const colorToEdit = colors.find((color) => color.id === idToEdit);
+    // set color to State (setEditColor)
     setEditColor(colorToEdit);
-    setRole(colorToEdit.role);
-    setHex(colorToEdit.hex);
-    setContrastText(colorToEdit.contrastText);
   }
-  // function die durch den update button onClick ausgelöst wird
-  //
+
+  // function to update list of color themes (after editing)
   function handleUpdateColor(updatedColor) {
     console.log("we are in app");
     const updatedColors = colors.map((color) => {
       return color.id === updatedColor.id ? updatedColor : color;
     });
-    setColors(updatedColors); //Farbliste akutalieren
-    setEditColor(null); // nicht mehr im Bearbeitungsmodus
+    setColors(updatedColors);
+    // out of edit mode
+    setEditColor(null);
   }
 
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm
-        onAddColor={handleAddColor}
-        role={role}
-        setRole={setRole}
-        hex={hex}
-        setHex={setHex}
-        contrastText={contrastText}
-        setContrastText={setContrastText}
-        editColor={editColor}
-      />
+      <ColorForm onAddColor={handleAddColor} editColor={editColor} />
 
       {colors.length === 0 ? (
         <p>There are no themes available.. Please add some.</p>
@@ -78,19 +63,13 @@ function App() {
           <Color
             key={color.id}
             color={color}
-            handleDeleteClick={handleDeleteClick} // zum öffnen der Bestätigung
-            handleDeleteColor={handleDeleteColor} // zum endgültigen löschen
-            handleCancelDelete={handleCancelDelete} // zum abbrechen
+            handleConfirmDelete={handleConfirmDelete} // to confirm
+            handleDeleteColor={handleDeleteColor} // to delete
+            handleCancelDelete={handleCancelDelete} // to cancel
             colorToDelete={colorToDelete}
             onHandleEditColor={handleEditColor}
             editColor={editColor}
             onUpdateColor={handleUpdateColor}
-            role={role}
-            setRole={setRole}
-            hex={hex}
-            setHex={setHex}
-            contrastText={contrastText}
-            setContrastText={setContrastText}
           />
         ))
       )}
@@ -99,5 +78,3 @@ function App() {
 }
 
 export default App;
-
-//ColorForm --(sendet neues Theme)--> App (speichert im State) --(mappt Liste)--> Color (zeigt einzelne Karte)

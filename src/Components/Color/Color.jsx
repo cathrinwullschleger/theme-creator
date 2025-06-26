@@ -6,15 +6,8 @@ import { useEffect } from "react";
 export default function Color({
   color,
   onUpdateColor,
-  role,
-  setRole,
-  hex,
-  setHex,
-  contrastText,
-  setContrastText,
-
   handleDeleteColor,
-  handleDeleteClick,
+  handleConfirmDelete,
   colorToDelete,
   handleCancelDelete,
 }) {
@@ -23,10 +16,10 @@ export default function Color({
   const [copyMessage, setCopyMessage] = useState(false);
   useEffect(() => {
     let timerId = setTimeout(() => {
-      setCopyMessage(false); // so verschwindet die Nachricht, da setCopyMessage true sien muss
+      setCopyMessage(false); // message disapears
     }, 3000);
     return () => clearTimeout(timerId); //verhindert das sich timer überschneiden
-  }, [copyMessage]); //wenn copyMessage sich verändert(true/false) wird useEffect ausgeführt
+  }, [copyMessage]); //copyMessage change (true/false) useEffect is a
 
   async function CopyToClipboard(hex) {
     console.log(hex);
@@ -35,7 +28,7 @@ export default function Color({
       console.log("copied");
       setCopyMessage(true);
     } catch (error) {
-      console.error("copy failed");
+      console.error("Copy failed");
     }
   }
   return (
@@ -46,21 +39,21 @@ export default function Color({
         color: color.contrastText,
       }}
     >
-      {isEditing ? ( // edit modus colorForm(Formularfelder werden angezeigt)
+      {isEditing ? ( // edit mode colorForm - formfields are shown
         <ColorForm
-          hex={hex}
-          setHex={setHex}
-          contrastText={contrastText}
-          setContrastText={setContrastText}
-          role={role}
-          setRole={setRole}
-          editColor={color.id}
-          onUpdateColor={onUpdateColor}
+          initialHex={color.hex}
+          initialContrastText={color.contrastText}
+          initialRole={color.role}
+          editColor={color}
+          onUpdateColor={(updateColor) => {
+            onUpdateColor(updateColor); // update state in app
+            setIsEditing(false); //close edit mode
+          }}
           onCancel={() => setIsEditing(false)}
-          setIsEditing={setIsEditing}
+          id={color.id}
         ></ColorForm>
       ) : (
-        // normaler modus
+        // normal mode
         <>
           <h3 className="color-card-headline">{color.hex}</h3>
           <button
@@ -84,7 +77,7 @@ export default function Color({
             <div
               className="color-card-highlight"
               style={{
-                "--contrast-text": color.contrastText, // CSS-Variable setzen
+                "--contrast-text": color.contrastText,
               }}
             >
               <p>Are you sure you want to delete this theme?</p>
@@ -106,7 +99,7 @@ export default function Color({
             </div>
           ) : (
             <button
-              onClick={() => handleDeleteClick(color.id)}
+              onClick={() => handleConfirmDelete(color.id)}
               type="button"
               title="delete"
             >
