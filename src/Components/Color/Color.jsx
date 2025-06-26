@@ -18,7 +18,11 @@ export default function Color({
   colorToDelete,
   handleCancelDelete,
 }) {
-  const isEditing = editColor?.id === color.id;
+  const isEditing = editColor.id === color.id;
+  // welche id wird gerade bearbeitet und wo soll colorForm geladen werden (andere Colors bleiben gerendert, aber ohne Bearbeitungsmodus)
+  //Farbe-ID	editColor?.id	color.id	isEditing	Was wird angezeigt?
+  // 1	        "2"         	"1"	      false	normale Ansicht
+  // 2	        "2"	          "2"	      true	Formular (<ColorForm>)
 
   return (
     <div
@@ -28,7 +32,7 @@ export default function Color({
         color: color.contrastText,
       }}
     >
-      {isEditing ? ( // bearbeitungsmodus wird so in der colorcard angezeigt
+      {isEditing ? ( // edit modus colorForm(Formularfelder werden angezeigt)
         <ColorForm
           hex={hex}
           setHex={setHex}

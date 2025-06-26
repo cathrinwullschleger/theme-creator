@@ -19,6 +19,8 @@ export default function ColorForm({
   onCancel,
 }) {
   //Wenn editColor sich ändert, führe bitte diesen Code aus, um die Formularfelder zu aktualisieren. State bleibt synchron
+  // react rendert erst die Komponenente mit dem aktuellen State, danach die useEffect function, wenn State verändert (editColor) wird neu gerendert.
+  // Wieso useEffect und nicht einfach if? endlos loop.
   useEffect(() => {
     if (editColor) {
       setRole(editColor.role);
