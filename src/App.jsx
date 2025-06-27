@@ -1,5 +1,5 @@
 // App – stores, edits, deletes colors
-// States: colors, editColor, colorToDelete
+// States: colors, colorToDelete
 
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
