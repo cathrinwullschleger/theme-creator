@@ -5,7 +5,7 @@ import "./ColorForm.css";
 import { useState, useEffect } from "react";
 import ColorInput from "./ColorInput.jsx";
 import { uid } from "uid";
-
+import "../Button/button.css";
 export default function ColorForm({
   onAddColor,
   onUpdateColor,
@@ -45,7 +45,6 @@ export default function ColorForm({
     if (editColor) {
       // edit mode
       console.log(editColor);
-      console.log("we are in the edit mode");
       data.id = editColor.id;
       console.log(data);
       onUpdateColor(data);

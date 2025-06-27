@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
 
-  margin: 0px 70px;
+  margin: 0px 45px;
   padding: 5px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -23,12 +23,4 @@
 
 .color-card-highlight {
   color: var(--contrast-text);
-}
-
-.button {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 0.85rem;
-
-  width: auto;
 }

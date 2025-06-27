@@ -2,6 +2,7 @@
 // Local state: isEditing
 
 import "./Color.css";
+import "../Button/button.css";
 import ColorForm from "./ColorForm";
 import { useState } from "react";
 import { useEffect } from "react";
