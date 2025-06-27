@@ -1,3 +1,6 @@
+// Color – a card that can trigger edit/delete actions
+// Local state: isEditing
+
 import "./Color.css";
 import ColorForm from "./ColorForm";
 import { useState } from "react";
@@ -60,6 +63,7 @@ export default function Color({
             }}
             type="button"
             title="copy hex"
+            className="button"
           >
             Copy
           </button>
@@ -67,7 +71,13 @@ export default function Color({
 
           <h4>{color.role}</h4>
           <p>contrast: {color.contrastText}</p>
-          <button onClick={() => setIsEditing(true)} type="button" title="Edit">
+
+          <button
+            onClick={() => setIsEditing(true)}
+            type="button"
+            title="Edit"
+            className="button"
+          >
             Edit
           </button>
           {colorToDelete === color.id ? (
@@ -83,6 +93,7 @@ export default function Color({
                 onClick={() => handleDeleteColor(color.id)}
                 type="button"
                 title="confirm-delete"
+                className="button"
               >
                 Delete
               </button>
@@ -90,6 +101,7 @@ export default function Color({
                 onClick={handleCancelDelete}
                 type="button"
                 title="cancel-delete"
+                className="button"
               >
                 Cancel
               </button>
@@ -99,6 +111,7 @@ export default function Color({
               onClick={() => handleConfirmDelete(color.id)}
               type="button"
               title="delete"
+              className="button"
             >
               Delete
             </button>

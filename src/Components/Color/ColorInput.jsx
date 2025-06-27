@@ -1,4 +1,5 @@
-// User gibt Werte ein -> ColotInput ->handleChance -> calls onChange -> new values via onChange in ColorForm with state (hex,constrastText)
+// ColorInput – controlled input component with synchronized text and color inputs
+// Controlled via props (value & onChange)
 
 export default function ColorInput({ value, onChange, id, name }) {
   function handleChange(event) {

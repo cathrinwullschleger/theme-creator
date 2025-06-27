@@ -1,7 +1,9 @@
 body {
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Lora", serif;
   padding: 10px;
 }
 h1 {
-  margin-left: 10px;
+  display: flex;
+
+  justify-content: center;
 }
