@@ -1,3 +1,6 @@
+// App – stores, edits, deletes colors
+// States: colors, editColor, colorToDelete
+
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
@@ -14,7 +17,7 @@ function App() {
 
   function handleAddColor(data) {
     console.log(data);
-    setColors((prevColors) => [data, ...prevColors]); // add new color to color array
+    setColors((prevColors) => [data, ...prevColors]); // add new color to array
   }
   function handleConfirmDelete(id) {
     setColorToDelete(id); //  color to delete
@@ -22,7 +25,7 @@ function App() {
   function handleDeleteColor(id) {
     setColors(
       colors.filter((color) => {
-        return color.id !== id;
+        return color.id !== id; // array without the id (colortodelete)
       })
     );
     setColorToDelete(null); //  delete

@@ -1,3 +1,6 @@
+// ColorForm – displays form, handles local input
+// Local states: role, hex, contrastText
+
 import "./ColorForm.css";
 import { useState, useEffect } from "react";
 import ColorInput from "./ColorInput.jsx";
@@ -14,6 +17,7 @@ export default function ColorForm({
   const [role, setRole] = useState("");
 
   useEffect(() => {
+    // no endless loop
     if (editColor) {
       setHex(editColor.hex);
       setContrastText(editColor.contrastText);
@@ -81,11 +85,11 @@ export default function ColorForm({
           value={contrastText}
           onChange={setContrastText}
         ></ColorInput>
-        <button type="submit">
+        <button type="submit" className="button">
           {editColor ? "Update Theme" : "Add Theme"}
         </button>
         {editColor && (
-          <button type="button" onClick={onCancel}>
+          <button type="button" className="button" onClick={onCancel}>
             Cancel
           </button>
         )}
